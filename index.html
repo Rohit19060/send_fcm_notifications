@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IVC Admin</title>
+</head>
+
+<body>
+    <form onsubmit="return sendNotification();">
+        <input type="text" id="token" name="token" placeholder="Token" required value="" /> <br />
+        <input type="text" id="FCMKey" name="FCMKey" placeholder="FCMKey" required value="" /><br />
+        <input type="text" id="title" name="title" placeholder="Title" required /><br />
+        <input type="text" id="body" name="body" placeholder="Body" required /><br />
+        <label for="state">State:</label>
+        <select required id="state" name="route">
+            <option value="">Select Route</option>
+            <option value="/refer-earn">Refer & Earn</option>
+            <option value="/leaderBoard+2">LeaderBoard (Contest Info)</option>
+            <option value="/leaderBoard+1">LeaderBoard (Prize Pool)</option>
+            <option value="/leaderBoard">LeaderBoard (Rankings)</option>
+            <option value="/home+4">Profile</option>
+            <option value="/home+3">Orders</option>
+            <option value="/home+2">Rewards</option>
+            <option value="/home+1">Portfolio</option>
+            <option value="/home">Home</option>
+        </select>
+        <input type="submit" value="Notify">
+    </form>
+
+    <div id="payload"></div>
+    <div id="response"></div>
+
+    <script>
+        // Send push notification
+        function sendNotification() {
+            let token = document.getElementById('token').value;
+            let fcmKey = document.getElementById('FCMKey').value;
+            let title = document.getElementById('title').value;
+            let body = document.getElementById('body').value;
+            let route = document.getElementById('route').value;
+            let data = {
+                "to": token,
+                "notification": {
+                    "title": title,
+                    "body": body,
+                },
+                "data": {
+                    "click_action": "FLUTTER_NOTIFICATION_CLICK",
+                    "sound": "default",
+                    "route": route
+                }
+            };
+            document.getElementById('payload').innerHTML = JSON.stringify(data);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://fcm.googleapis.com/fcm/send');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Authorization', 'key=' + fcmKey);
+            xhr.send(JSON.stringify(data));
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    document.getElementById('response').innerHTML = xhr.responseText;
+                }
+            }
+            return false;
+        }
+    </script>
+</body>
+
+</html>
