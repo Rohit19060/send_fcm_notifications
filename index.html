@@ -11,16 +11,21 @@
 </head>
 
 <body>
+    <div id="response"></div>
     <main>
-        <form onsubmit="return sendNotification();" id="notifyForm">
-            <h2>Send Notifications</h2>
-            <div class="inputDiv">
-                <label for="token">Token</label>
-                <input type="text" id="token" name="token" placeholder="Token" required value="">
-            </div>
-            <div class="inputDiv">
-                <label for="FCMKey">FCMKey</label>
-                <input type="text" id="FCMKey" name="FCMKey" placeholder="FCMKey" required value="" />
+        <div class="inputDiv">
+            <label for="token">Token</label>
+            <input type="text" id="token" name="token" placeholder="Token" required value="">
+        </div>
+        <div class="inputDiv">
+            <label for="FCMKey">FCMKey</label>
+            <input type="text" id="FCMKey" name="FCMKey" placeholder="FCMKey" required value="" />
+        </div>
+    </main>
+    <main>
+        <form onsubmit="return sendNotification(this);" class="notifyForm">
+            <div class="center">
+                <h2>Send Simple Notifications</h2>
             </div>
             <div class="inputDiv">
                 <label for="title">Title</label>
@@ -30,9 +35,26 @@
                 <label for="body">Body</label>
                 <input type="text" id="body" name="body" placeholder="Body" required />
             </div>
-
+            <div class="center">
+                <button type="submit" class="button">Notify</button>
+            </div>
+        </form>
+    </main>
+    <main>
+        <form onsubmit="return sendNotification(this);" class="notifyForm">
+            <div class="center">
+                <h2>Send Notifications With Route</h2>
+            </div>
             <div class="inputDiv">
-                <label for="route">Route:</label>
+                <label for="title">Title</label>
+                <input type="text" id="title1" name="title1" placeholder="Title" required />
+            </div>
+            <div class="inputDiv">
+                <label for="body">Body</label>
+                <input type="text" id="body1" name="body1" placeholder="Body" required />
+            </div>
+            <div class="inputDiv">
+                <label for="route">Route</label>
                 <select required id="route" name="route">
                     <option value="">Select Route</option>
                     <option value="/refer-earn">Refer & Earn</option>
@@ -46,23 +68,46 @@
                     <option value="/home">Home</option>
                 </select>
             </div>
-            <input type="submit" value="Notify">
+            <div class="center">
+                <button type="submit" class="button">Notify</button>
+            </div>
         </form>
-
-        <div id="payload"></div>
-        <div id="response"></div>
-
     </main>
     <script>
+        window.onload = () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                document.getElementById('token').value = token;
+            }
+            const FCMKey = localStorage.getItem('FCMKey');
+            if (FCMKey) {
+                document.getElementById('FCMKey').value = FCMKey;
+            }
+        };
+
         // Send push notification
-        function sendNotification() {
-            let token = document.getElementById('token').value;
-            let fcmKey = document.getElementById('FCMKey').value;
+        function sendNotification(e) {
             let title = document.getElementById('title').value;
             let body = document.getElementById('body').value;
             let route = document.getElementById('route').value;
+
+            let token = document.getElementById('token');
+            let FCMKey = document.getElementById('FCMKey');
+
+            let tokenValue = token.value;
+            let fcmKeyValue = FCMKey.value;
+
+            if (!tokenValue) {
+                alert('Please enter token');
+                token.focus();
+            } else if (!fcmKeyValue) {
+                alert('Please enter FCM Key');
+                FCMKey.focus();
+            }
+            return false;
+
             let data = {
-                "to": token,
+                "to": tokenValue,
                 "notification": {
                     "title": title,
                     "body": body,
@@ -73,15 +118,25 @@
                     "route": route
                 }
             };
-            document.getElementById('payload').innerHTML = JSON.stringify(data);
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://fcm.googleapis.com/fcm/send');
             xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('Authorization', 'key=' + fcmKey);
+            xhr.setRequestHeader('Authorization', 'key=' + fcmKeyValue);
             xhr.send(JSON.stringify(data));
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
-                    document.getElementById('response').innerHTML = xhr.responseText;
+                    if (xhr.status == 200 && JSON.parse(xhr.responseText)["success"] == 1) {
+                        document.getElementById('response').innerHTML = '<div class="success center">Notification sent successfully</div>';
+                        localStorage.setItem('token', tokenValue);
+                        localStorage.setItem('FCMKey', fcmKeyValue);
+                    } else {
+                        document.getElementById('response').innerHTML = '<div class="error center">' + JSON.parse(xhr.responseText)["error"] + '</div>';
+                    }
+                    setTimeout(() => {
+                        document.getElementById('response').innerHTML = '';
+                    }, 3000);
+
+                    e.reset();
                 }
             }
             return false;

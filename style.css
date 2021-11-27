@@ -4,74 +4,72 @@
 
 main {
     width: 45%;
-    margin: 0 auto;
-    text-align: center;
+    margin: auto;
+    margin-top: 10%;
 }
 
-h1 {
-    font-size: 44px;
-}
 
-button {
+.button {
     padding: 12px;
     font-weight: bold;
     background-color: white;
+    border-radius: 15px;
     border: none;
+    outline: none;
     box-shadow: -1px -1px 12px 3px rgba(232, 232, 232, 1);
     font-size: 15px;
+    margin: 10px 0px;
 }
 
-button:hover {
+.button:active {
+    box-shadow: inset -1px -1px 12px 3px rgba(232, 232, 232, 1);
+}
+
+.button:hover {
     background-color: black;
     color: white;
+    transition: 0.5s;
 }
 
-.text {
-    font-size: 20px;
-    margin-left: 40px;
-    margin-right: 10px;
+.success {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px 0px;
+}
+
+.error {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px 0px;
 }
 
 select {
     padding: 10px 3px;
 }
 
-.bookmark {
-    padding: 10px;
-    margin: 10px;
-    border-radius: 15px;
-    box-shadow: -1px -1px 12px 5px rgba(232, 232, 232, 1);
-}
-
-.bookmark:hover {
-    background-color: rgb(245, 245, 245);
-}
-
-.mainView {
-    display: flex;
-    cursor: pointer;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-}
 
 .h2 {
     font-size: 20px;
     letter-spacing: 1.5px;
 }
 
-.mb-3 {
-    margin-bottom: 30px;
-    margin-top: 20px;
-}
 
-.hiddenView {
-    display: flex;
-    justify-content: space-evenly;
+.center {
     align-items: center;
+    text-align: center;
 }
 
-#notifyForm {
+.notifyForm {
     padding: 30px;
     border-radius: 15px;
     box-shadow: -1px -1px 12px 5px rgba(232, 232, 232, 1);
@@ -82,11 +80,13 @@ input {
     min-width: 50%;
 }
 
+
+
 .inputDiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px;
+    margin: 20px 10px;
 }
 
 label {
