@@ -5,34 +5,54 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IVC Admin</title>
+    <title>Send FCM Notification</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="https://kingtechnologies.in/assets/images/Logo.webp" type="image/x-icon" />
 </head>
 
 <body>
-    <form onsubmit="return sendNotification();">
-        <input type="text" id="token" name="token" placeholder="Token" required value="" /> <br />
-        <input type="text" id="FCMKey" name="FCMKey" placeholder="FCMKey" required value="" /><br />
-        <input type="text" id="title" name="title" placeholder="Title" required /><br />
-        <input type="text" id="body" name="body" placeholder="Body" required /><br />
-        <label for="state">State:</label>
-        <select required id="state" name="route">
-            <option value="">Select Route</option>
-            <option value="/refer-earn">Refer & Earn</option>
-            <option value="/leaderBoard+2">LeaderBoard (Contest Info)</option>
-            <option value="/leaderBoard+1">LeaderBoard (Prize Pool)</option>
-            <option value="/leaderBoard">LeaderBoard (Rankings)</option>
-            <option value="/home+4">Profile</option>
-            <option value="/home+3">Orders</option>
-            <option value="/home+2">Rewards</option>
-            <option value="/home+1">Portfolio</option>
-            <option value="/home">Home</option>
-        </select>
-        <input type="submit" value="Notify">
-    </form>
+    <main>
+        <form onsubmit="return sendNotification();" id="notifyForm">
+            <h2>Send Notifications</h2>
+            <div class="inputDiv">
+                <label for="token">Token</label>
+                <input type="text" id="token" name="token" placeholder="Token" required value="">
+            </div>
+            <div class="inputDiv">
+                <label for="FCMKey">FCMKey</label>
+                <input type="text" id="FCMKey" name="FCMKey" placeholder="FCMKey" required value="" />
+            </div>
+            <div class="inputDiv">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Title" required />
+            </div>
+            <div class="inputDiv">
+                <label for="body">Body</label>
+                <input type="text" id="body" name="body" placeholder="Body" required />
+            </div>
 
-    <div id="payload"></div>
-    <div id="response"></div>
+            <div class="inputDiv">
+                <label for="route">Route:</label>
+                <select required id="route" name="route">
+                    <option value="">Select Route</option>
+                    <option value="/refer-earn">Refer & Earn</option>
+                    <option value="/leaderBoard+2">LeaderBoard (Contest Info)</option>
+                    <option value="/leaderBoard+1">LeaderBoard (Prize Pool)</option>
+                    <option value="/leaderBoard">LeaderBoard (Rankings)</option>
+                    <option value="/home+4">Profile</option>
+                    <option value="/home+3">Orders</option>
+                    <option value="/home+2">Rewards</option>
+                    <option value="/home+1">Portfolio</option>
+                    <option value="/home">Home</option>
+                </select>
+            </div>
+            <input type="submit" value="Notify">
+        </form>
 
+        <div id="payload"></div>
+        <div id="response"></div>
+
+    </main>
     <script>
         // Send push notification
         function sendNotification() {
