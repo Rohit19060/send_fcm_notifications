@@ -10,25 +10,22 @@ main {
 
 
 .button {
-    padding: 12px;
+    padding: 10px 20px;
     font-weight: bold;
     background-color: white;
     border-radius: 15px;
     border: none;
     outline: none;
-    box-shadow: -1px -1px 12px 3px rgba(232, 232, 232, 1);
+    box-shadow: -1px -1px 12px 5px rgba(232, 232, 232, 1);
     font-size: 15px;
     margin: 10px 0px;
-}
-
-.button:active {
-    box-shadow: inset -1px -1px 12px 3px rgba(232, 232, 232, 1);
 }
 
 .button:hover {
     background-color: black;
     color: white;
     transition: 0.5s;
+    box-shadow: none;
 }
 
 .success {

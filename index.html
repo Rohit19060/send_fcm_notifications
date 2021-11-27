@@ -87,6 +87,7 @@
 
         // Send push notification
         function sendNotification(e) {
+            console.log('sendNotification');
             let title = document.getElementById('title').value;
             let body = document.getElementById('body').value;
             let route = document.getElementById('route').value;
@@ -100,11 +101,12 @@
             if (!tokenValue) {
                 alert('Please enter token');
                 token.focus();
+                return false;
             } else if (!fcmKeyValue) {
                 alert('Please enter FCM Key');
                 FCMKey.focus();
+                return false;
             }
-            return false;
 
             let data = {
                 "to": tokenValue,
