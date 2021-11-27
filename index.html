@@ -87,7 +87,6 @@
 
         // Send push notification
         function sendNotification(e) {
-            console.log('sendNotification');
             let title = document.getElementById('title').value;
             let body = document.getElementById('body').value;
             let route = document.getElementById('route').value;
@@ -118,6 +117,20 @@
                     "click_action": "FLUTTER_NOTIFICATION_CLICK",
                     "sound": "default",
                     "route": route
+                },
+                "priority": 10,
+                "android": {
+                    "priority": "high"
+                },
+                "apns": {
+                    "headers": {
+                        "apns-priority": "5"
+                    }
+                },
+                "webpush": {
+                    "headers": {
+                        "Urgency": "high"
+                    }
                 }
             };
             var xhr = new XMLHttpRequest();
@@ -127,18 +140,22 @@
             xhr.send(JSON.stringify(data));
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
+                    console.log(JSON.parse(xhr.responseText));
                     if (xhr.status == 200 && JSON.parse(xhr.responseText)["success"] == 1) {
                         document.getElementById('response').innerHTML = '<div class="success center">Notification sent successfully</div>';
                         localStorage.setItem('token', tokenValue);
                         localStorage.setItem('FCMKey', fcmKeyValue);
                     } else {
-                        document.getElementById('response').innerHTML = '<div class="error center">' + JSON.parse(xhr.responseText)["error"] + '</div>';
+                        if (JSON.parse(xhr.responseText)["results"][0]["error"] == "NotRegistered") {
+                            document.getElementById('response').innerHTML = '<div class="error center">Token is not registered</div>';
+                        } else {
+                            document.getElementById('response').innerHTML = '<div class="error center">Notification not sent</div>';
+                        }
+
                     }
                     setTimeout(() => {
                         document.getElementById('response').innerHTML = '';
                     }, 3000);
-
-                    e.reset();
                 }
             }
             return false;
