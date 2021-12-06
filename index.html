@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <div id="payload"></div>
     <div id="response"></div>
     <main>
         <div class="inputDiv">
@@ -112,10 +113,10 @@
                 "notification": {
                     "title": title,
                     "body": body,
+                    "sound": "a",
                 },
                 "data": {
                     "click_action": "FLUTTER_NOTIFICATION_CLICK",
-                    "sound": "default",
                     "route": route
                 },
                 "priority": 10,
@@ -138,6 +139,7 @@
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.setRequestHeader('Authorization', 'key=' + fcmKeyValue);
             xhr.send(JSON.stringify(data));
+            document.getElementById('payload').innerHTML = '<div class="center">' + JSON.stringify(data) + '</div>';
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     console.log(JSON.parse(xhr.responseText));
