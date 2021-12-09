@@ -24,9 +24,9 @@
         </div>
     </main>
     <main>
-        <form onsubmit="return sendNotification(this);" class="notifyForm">
+        <form onsubmit="return sendNotification(this);" class="notifyForm" id="myForm">
             <div class="center">
-                <h2>Send Simple Notifications</h2>
+                <h2>Send Notifications</h2>
             </div>
             <div class="inputDiv">
                 <label for="title">Title</label>
@@ -36,45 +36,62 @@
                 <label for="body">Body</label>
                 <input type="text" id="body" name="body" placeholder="Body" required />
             </div>
+            <div class="inputDiv2">
+                <span>
+                    <label for="isRoute">Route</label>
+                    <input type="checkbox" name="isRoute" id="isRoute">
+                </span>
+                <span>
+                    <label for="isSound">Sound</label>
+                    <input type="checkbox" name="isSound" id="isSound">
+                </span>
+            </div>
+            <div id="extraParams"></div>
             <div class="center">
-                <button type="submit" class="button">Notify</button>
+                <button type="submit" class="button cursor">Notify</button>
             </div>
         </form>
     </main>
-    <main>
-        <form onsubmit="return sendNotification(this);" class="notifyForm">
-            <div class="center">
-                <h2>Send Notifications With Route</h2>
-            </div>
-            <div class="inputDiv">
-                <label for="title">Title</label>
-                <input type="text" id="title1" name="title1" placeholder="Title" required />
-            </div>
-            <div class="inputDiv">
-                <label for="body">Body</label>
-                <input type="text" id="body1" name="body1" placeholder="Body" required />
-            </div>
-            <div class="inputDiv">
-                <label for="route">Route</label>
-                <select required id="route" name="route">
-                    <option value="">Select Route</option>
-                    <option value="/refer-earn">Refer & Earn</option>
-                    <option value="/leaderBoard+2">LeaderBoard (Contest Info)</option>
-                    <option value="/leaderBoard+1">LeaderBoard (Prize Pool)</option>
-                    <option value="/leaderBoard">LeaderBoard (Rankings)</option>
-                    <option value="/home+4">Profile</option>
-                    <option value="/home+3">Orders</option>
-                    <option value="/home+2">Rewards</option>
-                    <option value="/home+1">Portfolio</option>
-                    <option value="/home">Home</option>
-                </select>
-            </div>
-            <div class="center">
-                <button type="submit" class="button">Notify</button>
-            </div>
-        </form>
-    </main>
+
     <script>
+
+        let isRoute = document.querySelector('#isRoute');
+        let isSound = document.querySelector('#isSound');
+        let extraParams = document.querySelector('#extraParams');
+
+
+        isRoute.addEventListener('change', function () {
+            let routeDiv = document.querySelector('#route');
+            if (isRoute.checked && routeDiv == null) {
+                let routeDiv = document.createElement('div');
+                routeDiv.id = 'route';
+                routeDiv.classList.add('inputDiv');
+                routeDiv.innerHTML = `
+                <label for="route">Route</label>
+                <input type="text" id="inputRoute" name="inputRoute" placeholder="Route" required />
+                `;
+                extraParams.appendChild(routeDiv);
+            } else {
+                extraParams.removeChild(routeDiv);
+            }
+        });
+
+        isSound.addEventListener('change', function () {
+            let soundDiv = document.querySelector('#sound');
+            if (isSound.checked && soundDiv == null) {
+                let soundDiv = document.createElement('div');
+                soundDiv.id = 'sound';
+                soundDiv.classList.add('inputDiv');
+                soundDiv.innerHTML = `
+                <label for="sound">Sound</label>
+                <input type="text" id="inputSound" name="inputSound" placeholder="Sound" required />
+                `;
+                extraParams.appendChild(soundDiv);
+            } else {
+                extraParams.removeChild(soundDiv);
+            }
+        });
+
         window.onload = () => {
             const token = localStorage.getItem('token');
             if (token) {
@@ -88,12 +105,11 @@
 
         // Send push notification
         function sendNotification(e) {
-            let title = document.getElementById('title').value;
-            let body = document.getElementById('body').value;
-            let route = document.getElementById('route').value;
-
             let token = document.getElementById('token');
             let FCMKey = document.getElementById('FCMKey');
+
+            let title = document.getElementById('title').value;
+            let body = document.getElementById('body').value;
 
             let tokenValue = token.value;
             let fcmKeyValue = FCMKey.value;
@@ -113,11 +129,9 @@
                 "notification": {
                     "title": title,
                     "body": body,
-                    "sound": "a.mp3",
                 },
                 "data": {
                     "click_action": "FLUTTER_NOTIFICATION_CLICK",
-                    "route": route
                 },
                 "priority": 10,
                 "android": {
@@ -134,6 +148,17 @@
                     }
                 }
             };
+
+            if (isRoute.checked) {
+                let route = document.querySelector('#inputRoute').value;
+                data.data.route = route;
+            }
+
+            if (isSound.checked) {
+                let sound = document.querySelector('#inputSound').value;
+                data.notification.sound = sound;
+            }
+
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://fcm.googleapis.com/fcm/send');
             xhr.setRequestHeader('Content-Type', 'application/json');

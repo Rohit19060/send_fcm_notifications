@@ -86,6 +86,22 @@ input {
     margin: 20px 10px;
 }
 
+.cursor {
+    cursor: pointer;
+}
+
+.inputDiv2 {
+     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 20px 10px;
+}
+
+.inputDiv2 span{
+    align-items: center;
+    display: flex;
+}
+
 label {
     font-size: 20px;
 }
