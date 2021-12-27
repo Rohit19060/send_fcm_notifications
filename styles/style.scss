@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.border {
+  border-radius: 4px;
+  border: 1px solid rgba(128, 128, 128, 0.26);
+}
+
+.hidden {
+  display: none;
+}
+
+.button {
+  padding: 10px 20px;
+  font-weight: bold;
+  background-color: white;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  box-shadow: -1px -1px 12px 5px rgba(232, 232, 232, 1);
+  font-size: 15px;
+  margin: 10px 0px;
+}
+
+.button:hover {
+  background-color: black;
+  color: white;
+  transition: 0.5s;
+  box-shadow: none;
+}
+
+.center {
+  align-items: center;
+  text-align: center;
+}
+
+.notifyForm {
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: -1px -1px 12px 5px rgba(232, 232, 232, 1);
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.addIcon:hover {
+  background-color: black;
+  color: white;
+  transition: 0.5s;
+  box-shadow: none;
+}
+
+.notifyForm {
+  label {
+    font-size: 12px;
+    color: rgba(128, 128, 128, 0.87);
+  }
+
+  input {
+    @extend .border;
+    padding: 5px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-top: 4px;
+    display: block;
+    max-width: 50vh;
+  }
+
+  .notification-preview {
+    border: 1px solid rgb(238, 238, 238);
+    box-shadow: 1px 1px 2px 1px rgba(232, 232, 232, 1);
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    .notification-text {
+      font-size: 15px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+}

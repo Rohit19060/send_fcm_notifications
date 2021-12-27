@@ -2,192 +2,105 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Send FCM Notification</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/bootstrap.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
     <link rel="shortcut icon" href="https://kingtechnologies.in/assets/images/Logo.webp" type="image/x-icon" />
 </head>
 
 <body>
     <div id="payload"></div>
-    <div id="response"></div>
-    <main>
-        <div class="inputDiv">
-            <label for="token">Token</label>
-            <input type="text" id="token" name="token" placeholder="Token" required value="">
+    <form onsubmit="return sendNotification(this);" class="notifyForm row m-3">
+        <h2>Notification</h2>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="title" title="Shown to end users as the notification title">Title <svg
+                        xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor"
+                        class="bi bi-patch-question" viewBox="0 0 16 16">
+                        <path
+                            d="M8.05 9.6c.336 0 .504-.24.554-.627.04-.534.198-.815.847-1.26.673-.475 1.049-1.09 1.049-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.71 1.71 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745z" />
+                        <path
+                            d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z" />
+                        <path d="M7.001 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0z" />
+                    </svg>
+                </label>
+                <input type="text" id="title" name="title" placeholder="Enter optional title" required
+                    class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="text">Text</label>
+                <input type="text" id="text" name="text" placeholder="Enter notification text" required class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="img" title="Optionally upload an image or provide a valid HTTPS image URL">Image Url
+                    (optional) <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor"
+                        class="bi bi-patch-question" viewBox="0 0 16 16">
+                        <path
+                            d="M8.05 9.6c.336 0 .504-.24.554-.627.04-.534.198-.815.847-1.26.673-.475 1.049-1.09 1.049-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.71 1.71 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745z" />
+                        <path
+                            d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z" />
+                        <path d="M7.001 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0z" />
+                    </svg></label>
+                <input type="url" id="img" name="img" placeholder="Example: https://yourapp.com/image.png" class="form-control"
+                    required />
+            </div>
+            <div class="form-group">
+                <label for="name" title="Name used to identify this notification on Firebase. This name is not shown to users.">Name
+                    (optional) <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor"
+                        class="bi bi-patch-question" viewBox="0 0 16 16">
+                        <path
+                            d="M8.05 9.6c.336 0 .504-.24.554-.627.04-.534.198-.815.847-1.26.673-.475 1.049-1.09 1.049-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.71 1.71 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745z" />
+                        <path
+                            d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z" />
+                        <path d="M7.001 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0z" />
+                    </svg></label>
+                <input type="text" id="name" name="name" placeholder="Enter optional name" required class="form-control" />
+            </div>
         </div>
-        <div class="inputDiv">
-            <label for="FCMKey">FCMKey</label>
-            <input type="text" id="FCMKey" name="FCMKey" placeholder="FCMKey" required value="" />
+        <div class="col-6 border pt-3">
+            <h6>Device Preview</h6>
+            <div class="notification-preview p-2">
+                <h6 class="notification-title m-0">Notification Title</h6>
+                <p class="notification-text m-0 pb-3">Notifiation Text</p>
+            </div>
         </div>
-    </main>
-    <main>
-        <form onsubmit="return sendNotification(this);" class="notifyForm" id="myForm">
-            <div class="center">
-                <h2>Send Notifications</h2>
-            </div>
-            <div class="inputDiv">
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" placeholder="Title" required />
-            </div>
-            <div class="inputDiv">
-                <label for="body">Body</label>
-                <input type="text" id="body" name="body" placeholder="Body" required />
-            </div>
-            <div class="inputDiv2">
-                <span>
-                    <label for="isRoute">Route</label>
-                    <input type="checkbox" name="isRoute" id="isRoute">
-                </span>
-                <span>
-                    <label for="isSound">Sound</label>
-                    <input type="checkbox" name="isSound" id="isSound">
-                </span>
+        <span>
+            <label for="isRoute">Route</label>
+            <input type="checkbox" name="isRoute" id="isRoute" />
+            </span>
+            <span>
+                <label for="isSound">Sound</label>
+            <input type="checkbox" name="isSound" id="isSound" />
+            </span>
             </div>
             <div id="extraParams"></div>
             <div class="center">
                 <button type="submit" class="button cursor">Notify</button>
             </div>
-        </form>
-    </main>
-
-    <script>
-
-        let isRoute = document.querySelector('#isRoute');
-        let isSound = document.querySelector('#isSound');
-        let extraParams = document.querySelector('#extraParams');
-
-
-        isRoute.addEventListener('change', function () {
-            let routeDiv = document.querySelector('#route');
-            if (isRoute.checked && routeDiv == null) {
-                let routeDiv = document.createElement('div');
-                routeDiv.id = 'route';
-                routeDiv.classList.add('inputDiv');
-                routeDiv.innerHTML = `
-                <label for="route">Route</label>
-                <input type="text" id="inputRoute" name="inputRoute" placeholder="Route" required />
-                `;
-                extraParams.appendChild(routeDiv);
-            } else {
-                extraParams.removeChild(routeDiv);
-            }
-        });
-
-        isSound.addEventListener('change', function () {
-            let soundDiv = document.querySelector('#sound');
-            if (isSound.checked && soundDiv == null) {
-                let soundDiv = document.createElement('div');
-                soundDiv.id = 'sound';
-                soundDiv.classList.add('inputDiv');
-                soundDiv.innerHTML = `
-                <label for="sound">Sound</label>
-                <input type="text" id="inputSound" name="inputSound" placeholder="Sound" required />
-                `;
-                extraParams.appendChild(soundDiv);
-            } else {
-                extraParams.removeChild(soundDiv);
-            }
-        });
-
-        window.onload = () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                document.getElementById('token').value = token;
-            }
-            const FCMKey = localStorage.getItem('FCMKey');
-            if (FCMKey) {
-                document.getElementById('FCMKey').value = FCMKey;
-            }
-        };
-
-        // Send push notification
-        function sendNotification(e) {
-            let token = document.getElementById('token');
-            let FCMKey = document.getElementById('FCMKey');
-
-            let title = document.getElementById('title').value;
-            let body = document.getElementById('body').value;
-
-            let tokenValue = token.value;
-            let fcmKeyValue = FCMKey.value;
-
-            if (!tokenValue) {
-                alert('Please enter token');
-                token.focus();
-                return false;
-            } else if (!fcmKeyValue) {
-                alert('Please enter FCM Key');
-                FCMKey.focus();
-                return false;
-            }
-
-            let data = {
-                "to": tokenValue,
-                "notification": {
-                    "title": title,
-                    "body": body,
-                },
-                "data": {
-                    "click_action": "FLUTTER_NOTIFICATION_CLICK",
-                },
-                "priority": 10,
-                "android": {
-                    "priority": "high"
-                },
-                "apns": {
-                    "headers": {
-                        "apns-priority": "5"
-                    }
-                },
-                "webpush": {
-                    "headers": {
-                        "Urgency": "high"
-                    }
-                }
-            };
-
-            if (isRoute.checked) {
-                let route = document.querySelector('#inputRoute').value;
-                data.data.route = route;
-            }
-
-            if (isSound.checked) {
-                let sound = document.querySelector('#inputSound').value;
-                data.notification.sound = sound;
-            }
+            </form>
+    <div class="row m-1">
+        <div class="col-6">
+            <div class="inputDiv">
+                <label for="token">Token</label>
+                <input type="text" id="token" name="token" placeholder="Token" required value="" />
+            </div>
+            <div class="inputDiv">
+                <label for="FCMKey">FCMKey</label>
+                <input type="text" id="FCMKey" name="FCMKey" placeholder="FCMKey" required value="" />
+            </div>
+        </div>
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://fcm.googleapis.com/fcm/send');
             xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('Authorization', 'key=' + fcmKeyValue);
-            xhr.send(JSON.stringify(data));
-            document.getElementById('payload').innerHTML = '<div class="center">' + JSON.stringify(data) + '</div>';
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == XMLHttpRequest.DONE) {
-                    console.log(JSON.parse(xhr.responseText));
-                    if (xhr.status == 200 && JSON.parse(xhr.responseText)["success"] == 1) {
-                        document.getElementById('response').innerHTML = '<div class="success center">Notification sent successfully</div>';
-                        localStorage.setItem('token', tokenValue);
-                        localStorage.setItem('FCMKey', fcmKeyValue);
-                    } else {
-                        if (JSON.parse(xhr.responseText)["results"][0]["error"] == "NotRegistered") {
-                            document.getElementById('response').innerHTML = '<div class="error center">Token is not registered</div>';
-                        } else {
-                            document.getElementById('response').innerHTML = '<div class="error center">Notification not sent</div>';
-                        }
+        </div>
+        </div>
 
-                    }
-                    setTimeout(() => {
-                        document.getElementById('response').innerHTML = '';
-                    }, 3000);
-                }
-            }
-            return false;
-        }
-    </script>
+    <script src="./scripts/bootstrap.js"></script>
+    <script src="./scripts/scripts.js"></script>
 </body>
 
 </html>
