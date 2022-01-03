@@ -9,7 +9,7 @@ isRouteFunction = () => {
     if (isRoute.checked) {
         routeDiv.innerHTML = `<div class="d-flex align-items-center my-2">
                     <input type="text" class="form-control p-2 my-0 " placeholder="Route" id="routeInput">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ms-1 custom-hover" viewBox="0 0 20 20" fill="#0f0"
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ms-1 custom-hover cursor-pointer" viewBox="0 0 20 20" fill="#0f0"
                         onclick="addRoute()" width="30" height="30">
                         <path fill-rule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
@@ -44,7 +44,7 @@ addRoutesToSelect = () => {
                 select.appendChild(option);
             });
             selectDiv.appendChild(select);
-            let svg = `<svg xmlns="http://www.w3.org/2000/svg" class="ms-1 mt-2 custom-hover" width="30" height="30" viewBox="0 0 20 20" fill="#f00" onclick="removeRoute()" >
+            let svg = `<svg xmlns="http://www.w3.org/2000/svg" class="ms-1 mt-2 custom-hover cursor-pointer" width="30" height="30" viewBox="0 0 20 20" fill="#f00" onclick="removeRoute()" >
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
                     </svg>`;
             selectDiv.innerHTML += svg;
@@ -64,8 +64,10 @@ addRoutesToSelect = () => {
 addRoute = () => {
     let route = routeDiv.querySelector("input").value;
     if (route != "") {
-        routes.push(route);
-        localStorage.setItem("routes", routes);
+        if (routes.indexOf(route) == -1) {
+            routes.push(route);
+            localStorage.setItem("routes", routes);
+        }
     } else {
         routeDiv.querySelector("input").focus();
     }
@@ -92,8 +94,10 @@ removeRoute = () => {
 addTokens = () => {
     let token = document.querySelector("#token").value;
     if (token != "") {
-        deviceTokens.push(token);
-        localStorage.setItem("deviceTokens", deviceTokens);
+        if (deviceTokens.indexOf(token) == -1) {
+            deviceTokens.push(token);
+            localStorage.setItem("deviceTokens", deviceTokens);
+        }
     } else {
         document.querySelector("#token").focus();
     }
@@ -136,7 +140,7 @@ addTokensToSelect = () => {
                 selectToken.appendChild(option);
             });
             tokensDiv.appendChild(selectToken);
-            let svg = `<svg xmlns="http://www.w3.org/2000/svg" class="ms-2 custom-hover" width="30" height="30" viewBox="0 0 20 20" fill="#f00" onclick="removeToken()" >
+            let svg = `<svg xmlns="http://www.w3.org/2000/svg" class="ms-2 custom-hover cursor-pointer" width="30" height="30" viewBox="0 0 20 20" fill="#f00" onclick="removeToken()" >
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
                     </svg>`;
             tokensDiv.innerHTML += svg;
@@ -183,10 +187,6 @@ isSound.addEventListener("change", function () {
 });
 
 window.onload = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-        document.getElementById("token").value = token;
-    }
     const FCMKey = localStorage.getItem("FCMKey");
     if (FCMKey) {
         document.getElementById("FCMKey").value = FCMKey;
@@ -204,7 +204,11 @@ window.onload = () => {
     const deviceTokensStorage = localStorage.getItem("deviceTokens");
     if (deviceTokensStorage) {
         deviceTokens = deviceTokensStorage.split(",");
-        addTokensToSelect();
+        if (deviceTokens.length == 1) {
+            document.getElementById("token").value = deviceTokens[0];
+        } else {
+            addTokensToSelect();
+        }
     }
 };
 

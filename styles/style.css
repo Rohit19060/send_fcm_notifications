@@ -132,5 +132,8 @@
     animation: octocat-wave 560ms ease-in-out;
   }
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 
 /*# sourceMappingURL=style.css.map */
