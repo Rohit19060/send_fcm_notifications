@@ -57,7 +57,11 @@
 .notifyForm {
   label {
     font-size: 12px;
-    color: rgba(128, 128, 128, 0.87);
+    color: rgb(128, 128, 128);
+    }
+
+    .label {
+      color: black;
   }
 
   input {
@@ -67,7 +71,6 @@
     margin-bottom: 10px;
     margin-top: 4px;
     display: block;
-    max-width: 50vh;
   }
 
   .notification-preview {
@@ -81,5 +84,67 @@
       margin-top: 10px;
       margin-bottom: 10px;
     }
+  }
+}
+
+.container {
+  position: relative;
+  font-family: Arial;
+}
+
+.text-block {
+  position: absolute;
+  top: 20px;
+
+  background-color: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.grey-color {
+  color: rgb(128, 128, 128);
+}
+
+.custom-hover {
+  box-shadow: 0 0.35rem 0.675rem -0.00125rem rgb(20 20 20 / 15%),
+    0 0.125rem 0.25rem -0.0625rem rgb(20 20 20 / 15%) !important;
+  transition: all 0.1s ease-in-out;
+  border-radius: 40px;
+}
+
+.custom-hover:active {
+  box-shadow: none !important;
+}
+
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out
+}
+
+@keyframes octocat-wave {
+
+  0%,
+  100% {
+    transform: rotate(0)
+  }
+
+  20%,
+  60% {
+    transform: rotate(-25deg)
+  }
+
+  40%,
+  80% {
+    transform: rotate(10deg)
+  }
+}
+
+@media (max-width:500px) {
+  .github-corner:hover .octo-arm {
+    animation: none
+  }
+
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
   }
 }
