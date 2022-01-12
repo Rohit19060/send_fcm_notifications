@@ -93,15 +93,13 @@ removeRoute = () => {
 
 addTokens = () => {
     let token = document.querySelector("#token").value;
-    if (token != "") {
-        if (deviceTokens.indexOf(token) == -1) {
-            deviceTokens.push(token);
-            localStorage.setItem("deviceTokens", deviceTokens);
-        }
+    if (token != "" && deviceTokens.indexOf(token) == -1 && token.length >= 160) {
+        deviceTokens.push(token);
+        localStorage.setItem("deviceTokens", deviceTokens);
+        document.querySelector("#token").value = "";
     } else {
         document.querySelector("#token").focus();
     }
-    document.querySelector("#token").value = "";
     addTokensToSelect();
 }
 
@@ -295,7 +293,7 @@ function sendNotification(e) {
         '<div class="center">' + JSON.stringify(data) + "</div>";
     xhr.onreadystatechange = function () {
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            console.log( JSON.parse(xhr.responseText));
+            console.log(JSON.parse(xhr.responseText));
             if (
                 xhr.status == 200 &&
                 JSON.parse(xhr.responseText)["success"] == 1

@@ -25,34 +25,33 @@
         </svg>
     </a>
     <form onsubmit="return sendNotification(this);" class="notifyForm row m-3">
-
         <h2>Notification</h2>
         <div class="row text-center mb-3 w-75 m-auto">
             <div class="form-group">
                 <label for="FCMKey">FCM Key</label>
                 <input type="text" id="FCMKey" name="FCMKey" placeholder="Enter server key" required
-                    class="form-control text-center p-2" />
-                </div>
-                <div class="form-group mb-3">
-                    <label for="token">Token</label>
-                    <div class="d-flex align-items-center">
-                        <input type="text" id="token" name="token" placeholder="Enter device token"
-                            class="form-control text-center p-2 m-0" />
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ms-2 custom-hover cursor-pointer" viewBox="0 0 20 20" fill="#0d6efd"
-                            onclick="addTokens()" width="30" height="30">
-                            <path fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                                clip-rule="evenodd" />
+                    class="form-control text-center p-2" minlength="160"/>
+            </div>
+            <div class="form-group mb-3">
+                <label for="token">Token</label>
+                <div class="d-flex align-items-center">
+                    <input type="text" id="token" name="token" placeholder="Enter device token"
+                        class="form-control text-center p-2 m-0" minlength="150"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ms-2 custom-hover cursor-pointer" viewBox="0 0 20 20" fill="#0d6efd"
+                        onclick="addTokens()" width="30" height="30">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                            clip-rule="evenodd" />
                     </svg>
                 </div>
-                </div>
-                <div class="form-group mb-2" id="inputTokens">
-                </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group w-75">
-                        <label for="title" title="Shown to end users as the notification title">Title <img src="./assets/title.svg"
-                                class="grey-color">
+            </div>
+            <div class="form-group mb-2" id="inputTokens">
+            </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group w-75">
+                    <label for="title" title="Shown to end users as the notification title">Title <img src="./assets/title.svg"
+                            class="grey-color">
                 </label>
                 <input type="text" id="title" name="title" placeholder="Enter optional title" required
                     class="form-control p-2" oninput="updatePreview(this);" />
@@ -65,21 +64,21 @@
             <div class="form-group w-75">
                 <label for="img" title="Optionally upload an image or provide a valid HTTPS image URL">Image Url
                     (optional) <img src="./assets/title.svg" class="grey-color"></label>
-                    <input type="url" id="img" name="img" placeholder="Example: https://yourapp.com/image.png" class="form-control p-2" />
-                    </div>
-                    <div class="form-group w-75">
-                        <label for="name" title="Name used to identify this notification on Firebase. This name is not shown to users.">Name
-                            (optional) <img src="./assets/title.svg" class="grey-color"></label>
-                        <input type="text" id="name" name="name" placeholder="Enter optional name" class="form-control p-2" />
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="isRoute" id="isRoute" name="isRoute">
-                        <label class="form-check-label label" for="isRoute">
-                            Route
-                        </label>
+                <input type="url" id="img" name="img" placeholder="Example: https://yourapp.com/image.png" class="form-control p-2" />
+                </div>
+                <div class="form-group w-75">
+                    <label for="name" title="Name used to identify this notification on Firebase. This name is not shown to users.">Name
+                        (optional) <img src="./assets/title.svg" class="grey-color"></label>
+                    <input type="text" id="name" name="name" placeholder="Enter optional name" class="form-control p-2" />
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="isRoute" id="isRoute" name="isRoute">
+                    <label class="form-check-label label" for="isRoute">
+                        Route
+                    </label>
             </div>
             <div id="route"></div>
-            
+
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="isSound" id="isSound" name="isRoute">
                 <label class="form-check-label label" for="isSound">
