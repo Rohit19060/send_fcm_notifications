@@ -295,6 +295,7 @@ function sendNotification(e) {
         '<div class="center">' + JSON.stringify(data) + "</div>";
     xhr.onreadystatechange = function () {
         if (xhr.readyState == XMLHttpRequest.DONE) {
+            console.log( JSON.parse(xhr.responseText));
             if (
                 xhr.status == 200 &&
                 JSON.parse(xhr.responseText)["success"] == 1
