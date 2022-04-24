@@ -298,16 +298,16 @@ function sendNotification(e) {
                 xhr.status == 200 &&
                 JSON.parse(xhr.responseText)["success"] == 1
             ) {
-                alert("Notification sent successfully");
+                alert("Notification Sent Successfully");
                 localStorage.setItem("FCMKey", fcmKeyValue);
             } else {
                 if (
                     JSON.parse(xhr.responseText)["results"][0]["error"] ==
                     "NotRegistered"
                 ) {
-                    alert("Token is not registered");
+                    alert("Token is Not registered");
                 } else {
-                    alert("Notification not sent");
+                    alert("Sending Notification Failed");
                 }
             }
         }
