@@ -212,6 +212,7 @@ window.onload = () => {
 
 // Send push notification
 function sendNotification(e) {
+    e.preventDefault();
     let token = document.querySelector("#token");
     let FCMKey = document.querySelector("#FCMKey");
 
